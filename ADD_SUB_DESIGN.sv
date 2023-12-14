@@ -99,7 +99,7 @@ module ADD_SUB_DESIGN(
  begin:ASYNC_EXECUTE
  if(!reset_n) begin
  output_reg <= 'b0;
- execute_done <= 1'b1;
+ execute_done <= 1'b0;
  end
  else 
  begin:EXECUTE
@@ -132,6 +132,7 @@ decode  = 'b0;
 execute = 'b0;
 store   = 'b0;
 done  = 'b0;
+w_en  = 'b0;
 end 
 else begin
 fetch = 'b1;
@@ -158,8 +159,6 @@ else
 begin 
 if(store_done)
 count <= count + 1'b1;
-else
-count <= count;
 end
 end:COUNT
 
@@ -175,7 +174,7 @@ always_ff @(posedge clk, negedge reset_n)
 begin:WRITE
 if(!reset_n)
 memory[count] = 'b0;
-else begin
+else if(w_en) begin
 memory[count] = output_reg;
 end end:WRITE
 

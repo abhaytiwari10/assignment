@@ -34,29 +34,18 @@ module tb_add_sub;
   
   ADD_SUB_DESIGN DUT (.*);
   
-   always #10 clk = ~clk;
-  
+   always #10 clk    = ~clk;
+   always #20 a_in   = $urandom();
+   always #20 b_in   = $urandom();
+   always #20 opcode = $urandom();
+   
   initial begin
-  clk = 1'b0;
+  clk     = 1'b0;
   reset_n = 1'b0;
-  #10
+  a_in    ='b0; 
+  b_in    ='b0;
+  opcode  ='b0;  
+  #10 
   reset_n = 1'b1;
-  #20
-  a_in   = 8'h44;
-  b_in   = 8'h55;
-  opcode = 1'b0;
-  
-  #40
-   a_in   = 8'h55;
-  b_in   = 8'h11;
-  opcode = 1'b1;
-   #40
-   a_in   = 8'h44;
-  b_in   = 8'h22;
-  opcode = 1'b0;
-    #40
-   a_in   = 8'h33;
-  b_in   = 8'h55;
-  opcode = 1'b1;
   end
 endmodule
